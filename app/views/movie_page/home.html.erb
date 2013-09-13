@@ -1,0 +1,32 @@
+<script>
+  function httpGet(url)
+  {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    return xmlHttp.responseText;
+  }
+  function getMovie(movie)
+  {
+    var title = "<p>"+movie.title+"</p>";
+    var image = "<img src="+movie.img_url+"/>";
+    var score = "<p>"+movie.avg_score+"</p>";
+    return "<div>"+title+image+score+"</div>";
+  }
+  function getAllMovies()
+  {
+    var temp = httpGet("http://cs3213.herokuapp.com/movies.json"); 
+    var data = JSON.parse(temp);
+    var list = "";
+    for (var i = 1; i < data.length; i++)
+    {
+      list += getMovie(data[i]);
+    }
+    document.getElementById("list").innerHTML=list;
+    console.log('log', document.getElementById("list"));
+  }
+</script>
+<body onload="getAllMovies();"/>
+<h1>List of all movies</h1>
+<div id="list"></div>
+<div id="list"></div>
