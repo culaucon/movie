@@ -10,8 +10,8 @@
   {
     var title = "<p>"+movie.title+"</p>";
     var image = "<img src="+movie.img_url+"/>";
-    var score = "<p>"+movie.avg_score+"</p>";
-    return "<div>"+title+image+score+"</div>";
+    var score = "<p>Average score: "+Math.round(movie.avg_score*100)/100+"</p>";
+    return "<div class=\"movie_span\">"+title+image+score+"</div>";
   }
   function getAllMovies()
   {
@@ -28,5 +28,4 @@
 </script>
 <body onload="getAllMovies();"/>
 <h1>List of all movies</h1>
-<div id="list"></div>
 <div id="list"></div>
