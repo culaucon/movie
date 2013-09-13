@@ -1,0 +1,36 @@
+<script>
+	function httpGet(url)
+  {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    return xmlHttp.responseText;
+  }
+  }
+  function display(id){
+	var filename = "http://cs3213.herokuapp.com/movies/" + id + ".json";
+	var data = JSON.parse(httpGet(filename));
+	var content ="";
+	content+="<table border = \"0\"><tr>";
+	content+="<td><img src =\"" + data.img_url +"\"></td>"
+	content+="<td><h1>"+data.title+"</h1>";
+	content+="<h3>"+data.summary+"</h3></td>";
+	content+="</tr></table>";
+	document.getElementById("movie-data").innerHTML = content;
+	
+	var commentFile = "http://cs3213.herokuapp.com/movies/"+id+"/reviews.json";
+	var commentData = JSON.parse(httpGet(commentFile));
+	var comment = "<table border=\"0\"";
+	for (var i = 1;i < commentData.length; i++){
+		comment+="<tr><td>";
+		comment+="<h3>"+ commentData[i].user.username + "</h3>";
+		comment+="<h5>"+ commentData[i].comment +"</h5>";
+		comment+="</td></tr>";
+	}
+	comment+="</table>";
+	document.getElementById("movie-comment").innerHTML = comment;
+  }
+</script>
+<body onload = "display(4)" />
+<div id="movie-data"> </div>
+<div id="movie-comment"> </div>
