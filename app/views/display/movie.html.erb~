@@ -1,0 +1,40 @@
+<script>
+function httpGet(url)
+  {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    return xmlHttp.responseText;
+  }
+function getComment(cmt){
+var user = cmt.user.username;
+var cmm = cmt.comment;
+return "<tr><td><h2>"+user+"</h2><h4>"+cmm+"</h4></td></tr>";
+}
+ 
+  function display(id){
+	var filename = "http://cs3213.herokuapp.com/movies/"+id+".json";
+	
+	var data = JSON.parse(httpGet(filename));
+	var content ="";
+	content+="<table border = \"1\"><tr>";
+	content+="<td><img src =\"" + data.img_url +"\"></td>"
+	content+="<td><h1>"+data.title+"</h1>";
+	content+="<h3>"+data.summary+"</h3></td>";
+	content+="</tr></table>";
+	document.getElementById("movie-data").innerHTML = content;
+	
+	
+	var commentFile = "http://cs3213.herokuapp.com/movies/"+id+"/reviews.json";
+	var commentData = JSON.parse(httpGet(commentFile));
+	var comment = "<table border=\"1\">";
+	for (var i = 0;i < commentData.length; i++){
+		comment+=getComment(commentData[i]);
+	}
+	comment+="</table>";
+	document.getElementById("movie-comment").innerHTML = comment;
+  }
+</script>
+<body onload = "display(38);" />
+<div id="movie-data"> </div>
+<div id="movie-comment"> </div>
